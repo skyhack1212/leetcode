@@ -1,0 +1,22 @@
+// 问题：https://leetcode-cn.com/problems/second-highest-salary/
+// 答题：
+
+select
+    (select
+        distinct Salary
+    from
+        Employee
+    order by Salary desc
+    limit 1,1)
+as SecondHighestSalary;
+
+思路：就是先把Salary倒序排列并distinct，然后从第1行开始取，偏移1行取1条。即是第二高的薪水。
+作者：little_bird
+链接：https://leetcode-cn.com/problems/second-highest-salary/solution/di-er-gao-de-xin-shui-liang-chong-jie-fa-by-little/
+
+回忆一下 limit 的用法：
+limit N     # 返回 N 条记录
+offset M    # 跳过 M 条记录，M 默认为 0
+limit M,N   # 相当于 limit N offset M，从第 M 条记录开始，返回 N 条记录
+
+之所以用子查询，是为了防止库表只有0或1条数据的情况；
